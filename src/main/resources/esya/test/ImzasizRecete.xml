@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ereceteBilgisi xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tesisKodu>11111111</tesisKodu>
+  <tcKimlikNo>11111111111</tcKimlikNo>
+  <protokolNo>61f9d7c6-45c6-445a-9f4a-4bbd1ae45df6</protokolNo>
+  <provizyonTipi>1</provizyonTipi>
+  <receteAltTuru>1</receteAltTuru>
+  <receteTarihi>10.10.2019</receteTarihi>
+  <receteTuru>1</receteTuru>
+  <doktorTcKimlikNo>11111111111</doktorTcKimlikNo>
+  <doktorAdi>AHMET</doktorAdi>
+  <doktorSoyadi>ALTAY</doktorSoyadi>
+  <doktorBransKodu>9999</doktorBransKodu>
+  <doktorSertifikaKodu>0</doktorSertifikaKodu>
+  <kisiBilgisi>
+    <tcKimlikNo>11111111111</tcKimlikNo>
+    <adi>DENEME</adi>
+    <soyadi>HASTASI</soyadi>
+    <cinsiyeti>K</cinsiyeti>
+    <dogumTarihi>04.01.1980</dogumTarihi>
+  </kisiBilgisi>
+  <ereceteIlacBilgisi>
+    <adet>1</adet>
+    <barkod>8699546093953</barkod>
+    <ilacAdi>YASMIN 21 FILM TABLET</ilacAdi>
+    <kullanimDoz1>1</kullanimDoz1>
+    <kullanimDoz2>1</kullanimDoz2>
+    <kullanimPeriyot>1</kullanimPeriyot>
+    <kullanimPeriyotBirimi>3</kullanimPeriyotBirimi>
+    <kullanimSekli>1</kullanimSekli>
+  </ereceteIlacBilgisi>
+  <ereceteTaniBilgisi>
+    <taniAdi>GENEL TIBBİ MUAYENE</taniAdi>
+    <taniKodu>Z00.0</taniKodu>
+  </ereceteTaniBilgisi>
+  <ereceteAciklamaBilgisi>
+    <aciklama>DENEME SAN. VE TİC.LTD.ŞTİ.</aciklama>
+    <aciklamaTuru>99</aciklamaTuru>
+  </ereceteAciklamaBilgisi>
+</ereceteBilgisi>
