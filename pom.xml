@@ -9,15 +9,24 @@
 	<packaging>jar</packaging>
 
 	<name>esign</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/ahmetaltay33/esign</url>
+
+	<developers>
+		<developer>
+			<id>1</id>
+			<name>Ahmet ALTAY</name>
+			<email>altaybilisim@gmail.com</email>
+			<url>https://github.com/ahmetaltay33</url>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<libFolder>D:\Projeler\Java\lib\</libFolder>
 		<esyaLibFolder>${libFolder}esya\${esyaVersion}\lib\</esyaLibFolder>
 		<esyaVersion>2.2.1.4</esyaVersion>
-	 <maven.compiler.source>1.8</maven.compiler.source>
-	 <maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
