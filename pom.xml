@@ -22,9 +22,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<libFolder>D:\Projeler\Java\lib\</libFolder>
+		<libFolder>D:\DevTools\Java\lib\</libFolder>
 		<esyaLibFolder>${libFolder}esya\${esyaVersion}\lib\</esyaLibFolder>
-		<esyaVersion>2.2.1.4</esyaVersion>
+		<esyaVersion>2.2.17</esyaVersion>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
@@ -39,9 +39,9 @@
 		<dependency>
 			<groupId>esya</groupId>
 			<artifactId>akiscif</artifactId>
-			<version>2.6.1</version>
+			<version>2.7.11</version>
 			<scope>system</scope>
-			<systemPath>${esyaLibFolder}akiscif-2.6.1.jar</systemPath>
+			<systemPath>${esyaLibFolder}akiscif-2.7.11.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>esya</groupId>
