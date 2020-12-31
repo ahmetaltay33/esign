@@ -78,18 +78,18 @@ public class App {
 				System.out.println();
 			}
 			System.out.println("SmartCardManager2 End");
-
-			System.out.println("Signing XML");
-			
+		
 			XmlSigner signer = new XmlSigner();
 			
-			String xml = IOUtils.resourceToString("/esya/test/ImzasizRecete.xml", StandardCharsets.UTF_8);
+			String xml = IOUtils.resourceToString("/esya/test/ImzasizRecete.xml", StandardCharsets.UTF_8);		
+			System.out.println("Unsigned XML");
+			System.out.println(xml);
 			
+			System.out.println("Signing XML");
 			String signedXml = signer.signBes(xml, terminals.get(0), cert.SerialNumber, "12345");
 			
-			System.out.println(signedXml);
-			
 			System.out.println("Signed XML");
+			System.out.println(signedXml);
 		
 		} catch (Exception e) {
 			logger.error(e.toString());
