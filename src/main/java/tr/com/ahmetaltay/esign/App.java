@@ -23,7 +23,7 @@ import tr.com.ahmetaltay.esign.util.ESignUtil;
  */
 public class App {
 	public static void main(String[] args) {
-		System.out.println("Program Start");
+		System.out.println("-------------------Program Start-------------------");
 			
 		String loggingPropertiesFile = App.class.getClassLoader().getResource("logging.properties").getFile();
 		System.setProperty("java.util.logging.config.file", loggingPropertiesFile);
@@ -50,52 +50,62 @@ public class App {
 					.disableHtmlEscaping()
 					.create();
 
-			System.out.println("SmartCardManager2 Start");
+			
+			logger.trace("-------------------SmartCardManager2 Start-------------------");
 			SmartCardManager scm2 = new SmartCardManager();
 
-			System.out.println();
-			System.out.println("Terminal Listesi Özet");
+			logger.trace("Terminal Listesi Özet");
 			List<String> terminals = scm2.getTerminals();
-			System.out.println(gson.toJson(terminals));
+			logger.debug(gson.toJson(terminals));
 
-			System.out.println();
-			System.out.println("Terminal Listesi Detaylı");
+			logger.trace("Terminal Listesi Detaylı");
 			List<Terminal> terminalsDetailed = scm2.getTerminalsDetailed();
-			System.out.println(gson.toJson(terminalsDetailed));	
+			logger.debug(gson.toJson(terminalsDetailed));	
 			
-			System.out.println();
-			System.out.println("Terminal ve Sertifika Listesi Detaylı");
+			logger.trace("Terminal ve Sertifika Listesi Detaylı");
 			List<TerminalWithCertificates> terminalWithCerts = scm2.getTerminalsWithCertificates();
-			System.out.println(gson.toJson(terminalWithCerts));				
+			logger.debug(gson.toJson(terminalWithCerts));				
 			
-			System.out.println();
-			System.out.println("Sertifika Listesi");
+			logger.trace("Sertifika Listesi");
 			Certificate cert = null;
 			for (String terminal : terminals) {
 				List<Certificate> certList = scm2.getCertificates(terminal);
 				cert = certList.get(0);
-				System.out.println(gson.toJson(certList));
-				System.out.println();
+				logger.debug(gson.toJson(certList));
 			}
-			System.out.println("SmartCardManager2 End");
+			logger.trace("-------------------SmartCardManager2 End-------------------");
 		
+			
+			logger.trace("-------------------Certificate Validation Start-------------------");
+			CertValidator certVal = new CertValidator();
+			try {
+				certVal.validate(terminals.get(0), cert.SerialNumber);
+				logger.trace("Certificate Valid");
+			} catch (Exception e) {
+				logger.error(e.toString());
+			}				
+			logger.trace("-------------------Certificate Validation End-------------------");
+			
+			
+			logger.trace("-------------------XML Signing Start-------------------");
 			XmlSigner signer = new XmlSigner();
 			
 			String xml = IOUtils.resourceToString("/esya/test/ImzasizRecete.xml", StandardCharsets.UTF_8);		
-			System.out.println("Unsigned XML");
-			System.out.println(xml);
+			logger.trace("Unsigned XML");
+			logger.debug(xml);
 			
-			System.out.println("Signing XML");
+			logger.trace("Signing XML");
 			String signedXml = signer.signBes(xml, terminals.get(0), cert.SerialNumber, "12345");
 			
-			System.out.println("Signed XML");
-			System.out.println(signedXml);
+			logger.trace("Signed XML");
+			logger.debug(signedXml);
+			logger.trace("-------------------XML Signing End-------------------");
 		
 		} catch (Exception e) {
 			logger.error(e.toString());
 		}
 		System.out.println();
 
-		System.out.println("Program End");
+		System.out.println("-------------------Program End-------------------");
 	}
 }
