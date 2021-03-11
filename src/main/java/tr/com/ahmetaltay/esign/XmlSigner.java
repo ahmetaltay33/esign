@@ -1,9 +1,5 @@
-/**
- * 
- */
 package tr.com.ahmetaltay.esign;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +10,6 @@ import tr.gov.tubitak.uekae.esya.api.asn.x509.ECertificate;
 import tr.gov.tubitak.uekae.esya.api.common.ESYAException;
 import tr.gov.tubitak.uekae.esya.api.common.crypto.Algorithms;
 import tr.gov.tubitak.uekae.esya.api.common.crypto.BaseSigner;
-import tr.gov.tubitak.uekae.esya.api.common.util.LicenseUtil;
 import tr.gov.tubitak.uekae.esya.api.smartcard.pkcs11.BaseSmartCard;
 import tr.gov.tubitak.uekae.esya.api.xmlsignature.Context;
 import tr.gov.tubitak.uekae.esya.api.xmlsignature.XMLSignature;
@@ -23,7 +18,7 @@ import tr.gov.tubitak.uekae.esya.api.xmlsignature.config.Config;
 import tr.gov.tubitak.uekae.esya.api.xmlsignature.document.InMemoryDocument;
 
 /**
- * XML imzalayıcı
+ * XML imzalayici
  * 
  * @author ahmet
  */
@@ -31,11 +26,6 @@ public class XmlSigner {
 
 	public String signBes(String aXml, String aTerminalName, BigInteger aCertSerial, String aPinCode)
 			throws PKCS11Exception, IOException, ESYAException, XMLSignatureException {
-
-		try (FileInputStream fs = new FileInputStream(ESignUtil.ESYA_LISANS_FILE)) {
-			LicenseUtil.setLicenseXml(fs);
-		}
-
 		Context context = new Context();
 		Config config = new Config(ESignUtil.ESYA_XMLSIGNATURE_CONFIG_FILE);
 		context.setConfig(config);

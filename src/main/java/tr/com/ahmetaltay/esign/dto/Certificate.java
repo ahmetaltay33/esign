@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tr.com.ahmetaltay.esign.dto;
 
 import java.math.BigInteger;
@@ -8,7 +5,7 @@ import java.math.BigInteger;
 import lombok.Data;
 
 /**
- * @author Ahmet
+ * @author ahmet
  *
  */
 public @Data class Certificate {

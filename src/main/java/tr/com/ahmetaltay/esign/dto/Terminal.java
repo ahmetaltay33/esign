@@ -1,12 +1,9 @@
-/**
- * 
- */
 package tr.com.ahmetaltay.esign.dto;
 
 import lombok.Data;
 
 /**
- * @author Ahmet
+ * @author ahmet
  *
  */
 public @Data class Terminal {

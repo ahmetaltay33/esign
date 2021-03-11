@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tr.com.ahmetaltay.esign;
 
 import java.io.IOException;
@@ -31,8 +28,8 @@ import tr.gov.tubitak.uekae.esya.api.smartcard.pkcs11.SmartCardException;
 import tr.gov.tubitak.uekae.esya.api.smartcard.pkcs11.SmartOp;
 
 /**
- * Akıllı kart yöneticisi
- * @author Ahmet
+ * Akilli kart yoneticisi
+ * @author ahmet
  */
 public class SmartCardManager {
 

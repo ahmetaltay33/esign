@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tr.com.ahmetaltay.esign.util;
 
 import java.io.File;
@@ -14,7 +11,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
 /**
- * ESign için kullanılacak genel araçlardır.
+ * ESign icin kullanilacak genel araclardir.
  * 
  * @author ahmet
  */
@@ -31,11 +28,11 @@ public class ESignUtil {
 	public static final String ESYA_CERTSTORE_FILE = FilenameUtils.concat(ESYA_CERTSTORE_FOLDER, "SertifikaDeposu.svt");	
 	public static final String ESYA_LISANS_FILE = FilenameUtils.concat(ESYA_FOLDER, "lisans.xml");	
 
-	public static URL getResourceURL(String aResourceName) throws IOException {
+	private static URL getResourceURL(String aResourceName) throws IOException {
 		return IOUtils.resourceToURL(aResourceName);
 	}
 
-	public static String getResourceString(String aResourceName) throws IOException {
+	private static String getResourceString(String aResourceName) throws IOException {
 		return IOUtils.resourceToString(aResourceName, StandardCharsets.UTF_8);
 	}
 
@@ -50,6 +47,8 @@ public class ESignUtil {
 	private void createTrustedCerts() throws IOException {
 		FileUtils.copyURLToFile(getResourceURL("/esya/certstore/trusted/kokshs384.t6.crt"), new File(FilenameUtils.concat(ESYA_TRUSTED_FOLDER, "kokshs384.t6.crt")));
 		FileUtils.copyURLToFile(getResourceURL("/esya/certstore/trusted/test-kokhs-sha256.crt"), new File(FilenameUtils.concat(ESYA_TRUSTED_FOLDER, "test-kokhs-sha256.crt")));
+		FileUtils.copyURLToFile(getResourceURL("/esya/certstore/trusted/test-neshs-sha256.crt"), new File(FilenameUtils.concat(ESYA_TRUSTED_FOLDER, "test-neshs-sha256.crt")));
+		FileUtils.copyURLToFile(getResourceURL("/esya/certstore/trusted/testuc@test.com.tr_313729.pfx"), new File(FilenameUtils.concat(ESYA_TRUSTED_FOLDER, "testuc@test.com.tr_313729.pfx")));
 	}
 
 	private void createSmartCardConfigXml() throws IOException {

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tr.com.ahmetaltay.esign.dto;
 
 import java.util.List;

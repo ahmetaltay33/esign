@@ -1,5 +1,6 @@
 package tr.com.ahmetaltay.esign;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -16,10 +17,12 @@ import tr.com.ahmetaltay.esign.dto.Certificate;
 import tr.com.ahmetaltay.esign.dto.Terminal;
 import tr.com.ahmetaltay.esign.dto.TerminalWithCertificates;
 import tr.com.ahmetaltay.esign.util.ESignUtil;
+import tr.gov.tubitak.uekae.esya.api.common.util.LicenseUtil;
 
 /**
  * ESYA Api Test App
  *
+ * @author ahmet
  */
 public class App {
 	public static void main(String[] args) {
@@ -40,7 +43,13 @@ public class App {
 			eSignUtil.initFilesAndFolders();
 		} catch (IOException e) {
 			logger.error(e.toString());
-		}		
+		}	
+		
+		try (FileInputStream fs = new FileInputStream(ESignUtil.ESYA_LISANS_FILE)) {
+			LicenseUtil.setLicenseXml(fs);
+		} catch (Exception e) {
+			logger.error(e.toString());
+		}
 		
 		try {
 			Gson gson = new GsonBuilder()
@@ -54,15 +63,15 @@ public class App {
 			logger.trace("-------------------SmartCardManager2 Start-------------------");
 			SmartCardManager scm2 = new SmartCardManager();
 
-			logger.trace("Terminal Listesi Özet");
+			logger.trace("Terminal Listesi Ozet");
 			List<String> terminals = scm2.getTerminals();
 			logger.debug(gson.toJson(terminals));
 
-			logger.trace("Terminal Listesi Detaylı");
+			logger.trace("Terminal Listesi Detayli");
 			List<Terminal> terminalsDetailed = scm2.getTerminalsDetailed();
 			logger.debug(gson.toJson(terminalsDetailed));	
 			
-			logger.trace("Terminal ve Sertifika Listesi Detaylı");
+			logger.trace("Terminal ve Sertifika Listesi Detayli");
 			List<TerminalWithCertificates> terminalWithCerts = scm2.getTerminalsWithCertificates();
 			logger.debug(gson.toJson(terminalWithCerts));				
 			
