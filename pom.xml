@@ -143,13 +143,6 @@
 		</dependency>
 		<dependency>
 			<groupId>esya</groupId>
-			<artifactId>ma3api-asic</artifactId>
-			<version>${esyaVersion}</version>
-			<scope>system</scope>
-			<systemPath>${esyaLibFolder}ma3api-asic-${esyaVersion}.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>esya</groupId>
 			<artifactId>ma3api-pades</artifactId>
 			<version>${esyaVersion}</version>
 			<scope>system</scope>
@@ -161,7 +154,7 @@
 			<version>3.7.2</version>
 			<scope>system</scope>
 			<systemPath>${esyaLibFolder}sqlite-jdbc-3.7.2.jar</systemPath>
-		</dependency>
+		</dependency>	
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

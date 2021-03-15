@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Calendar;
 
-import javax.xml.bind.ValidationException;
-
 import sun.security.pkcs11.wrapper.PKCS11Exception;
+import tr.com.ahmetaltay.esign.exception.ValidationException;
 import tr.com.ahmetaltay.esign.util.ESignUtil;
 import tr.gov.tubitak.uekae.esya.api.asn.x509.ECertificate;
 import tr.gov.tubitak.uekae.esya.api.certificate.validation.CertificateStatus;
