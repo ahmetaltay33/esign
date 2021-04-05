@@ -1,10 +1,14 @@
 package tr.com.ahmetaltay.esign;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,18 +101,52 @@ public class App {
 			
 			
 			logger.trace("-------------------XML Signing Start-------------------");
-			XmlSigner signer = new XmlSigner();
+			XmlSigner xmlSigner = new XmlSigner();
 			
 			String xml = IOUtils.resourceToString("/esya/test/ImzasizRecete.xml", StandardCharsets.UTF_8);		
 			logger.trace("Unsigned XML");
 			logger.debug(xml);
 			
 			logger.trace("Signing XML");
-			String signedXml = signer.signBes(xml, terminals.get(0), cert.SerialNumber, "12345");
+			String signedXml = xmlSigner.signBes(xml, terminals.get(0), cert.SerialNumber, ESignUtil.TEST_IMZA_PIN);
 			
 			logger.trace("Signed XML");
 			logger.debug(signedXml);
 			logger.trace("-------------------XML Signing End-------------------");
+			
+			
+			logger.trace("-------------------PDF Signing Start-------------------");
+			PdfSigner pdfSigner = new PdfSigner();	
+			String tmpUnsignedPdfFile = FilenameUtils.concat(FileUtils.getTempDirectoryPath(), "ESignUnsignedTestPdf.pdf");
+			FileUtils.deleteQuietly(new File(tmpUnsignedPdfFile));
+			String tmpSignedPdfFile = FilenameUtils.concat(FileUtils.getTempDirectoryPath(), "ESignSignedTestPdf.pdf");
+			FileUtils.deleteQuietly(new File(tmpSignedPdfFile));
+			
+			byte[] pdfBuffer = IOUtils.resourceToByteArray("/esya/test/ImzasizPdf.pdf");		
+			FileUtils.writeByteArrayToFile(new File(tmpUnsignedPdfFile), pdfBuffer);
+			logger.trace("Unsigned PDF");
+			logger.trace(tmpUnsignedPdfFile);
+
+			FileInputStream unsignedPdf = new FileInputStream(tmpUnsignedPdfFile);
+			FileOutputStream signedPdf = new FileOutputStream(tmpSignedPdfFile);
+			
+			logger.trace("Signing PDF");
+			pdfSigner.signPades(unsignedPdf, signedPdf, terminals.get(0), cert.SerialNumber, ESignUtil.TEST_IMZA_PIN);
+
+			logger.trace("Signed PDF");
+			logger.trace(tmpSignedPdfFile);
+
+			FileInputStream validationPdf = new FileInputStream(tmpSignedPdfFile);
+			if (pdfSigner.validateSignedPdf(validationPdf))
+			{
+				logger.info("PDF Sign is valid!");
+			}
+			else
+			{
+				logger.error("PDF Sign is not valid!");
+			}
+			logger.trace("-------------------PDF Signing End-------------------");			
+			
 		
 		} catch (Exception e) {
 			logger.error(e.toString());

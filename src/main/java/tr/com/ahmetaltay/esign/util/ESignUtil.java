@@ -16,6 +16,7 @@ import org.apache.commons.io.IOUtils;
  * @author ahmet
  */
 public class ESignUtil {
+	public static final String TEST_IMZA_PIN = "12345";
 	public static final String ROOT_DIR = Paths.get("").toAbsolutePath().toString();
 	public static final String ESYA_FOLDER = FilenameUtils.concat(ROOT_DIR, "esya");
 	public static final String ESYA_CONFIG_FOLDER = FilenameUtils.concat(ESYA_FOLDER, "config");
@@ -23,6 +24,7 @@ public class ESignUtil {
 	public static final String ESYA_TRUSTED_FOLDER = FilenameUtils.concat(ESYA_CERTSTORE_FOLDER, "trusted");
 	public static final String ESYA_CERTVAL_POLICY_FILE = FilenameUtils.concat(ESYA_CONFIG_FOLDER, "certval-policy.xml");
 	public static final String ESYA_CERTVAL_POLICY_MALIMUHUR_FILE = FilenameUtils.concat(ESYA_CONFIG_FOLDER, "certval-policy-malimuhur.xml");
+	public static final String ESYA_SIGNATURE_CONFIG_FILE = FilenameUtils.concat(ESYA_CONFIG_FOLDER, "esya-signature-config.xml");
 	public static final String ESYA_XMLSIGNATURE_CONFIG_FILE = FilenameUtils.concat(ESYA_CONFIG_FOLDER, "xmlsignature-config.xml");
 	public static final String ESYA_SMARTCARD_CONFIG_FILE = FilenameUtils.concat(ESYA_CONFIG_FOLDER, "smartcard-config.xml");
 	public static final String ESYA_CERTSTORE_FILE = FilenameUtils.concat(ESYA_CERTSTORE_FOLDER, "SertifikaDeposu.svt");	
@@ -76,6 +78,13 @@ public class ESignUtil {
 		FileUtils.writeStringToFile(new File(ESYA_XMLSIGNATURE_CONFIG_FILE), xml, StandardCharsets.UTF_8);
 	}
 
+	private void createsignatureConfigXml() throws IOException {
+		String xml = getResourceString("/esya/config/esya-signature-config.xml");
+		xml = xml.replace("certval-policy-test.xml", ESYA_CERTVAL_POLICY_FILE)
+				 .replace("certval-policy-malimuhur.xml", ESYA_CERTVAL_POLICY_MALIMUHUR_FILE);
+		FileUtils.writeStringToFile(new File(ESYA_SIGNATURE_CONFIG_FILE), xml, StandardCharsets.UTF_8);
+	}
+
 	public void initFilesAndFolders() throws IOException {
 		FileUtils.forceMkdir(new File(ESYA_CONFIG_FOLDER));
 		FileUtils.forceMkdir(new File(ESYA_CERTSTORE_FOLDER));
@@ -87,5 +96,6 @@ public class ESignUtil {
 		createCertvalPolicyXml();
 		createCertvalPolicyMalimuhurXml();
 		createXmlsignatureConfigXml();
+		createsignatureConfigXml();
 	}
 }
