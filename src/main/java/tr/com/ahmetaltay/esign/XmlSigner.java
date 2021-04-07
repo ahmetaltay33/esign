@@ -1,8 +1,12 @@
 package tr.com.ahmetaltay.esign;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.io.IOUtils;
 
 import sun.security.pkcs11.wrapper.PKCS11Exception;
 import tr.com.ahmetaltay.esign.util.ESignUtil;
@@ -55,5 +59,37 @@ public class XmlSigner {
 				bsc.closeSession();
 		}
 	}
+	
+	public void signBes(InputStream inStream, OutputStream outStream, String aTerminalName, BigInteger aCertSerial, String aPinCode, String docType)
+			throws PKCS11Exception, IOException, ESYAException, XMLSignatureException {
+		Context context = new Context();
+		Config config = new Config(ESignUtil.ESYA_XMLSIGNATURE_CONFIG_FILE);
+		context.setConfig(config);
 
+		XMLSignature signature = new XMLSignature(context);
+		byte[] buffer = new byte[inStream.available()];
+		IOUtils.read(inStream, buffer);
+		InMemoryDocument doc = new InMemoryDocument(buffer, "", docType, StandardCharsets.UTF_8.name());
+		signature.addDocument(doc);
+
+		SmartCardManager scm = new SmartCardManager();
+		BaseSmartCard bsc = scm.getSmartCard(aTerminalName);
+		try {
+			ECertificate cert = scm.getECertificate(bsc, aCertSerial);
+			signature.addKeyInfo(cert);
+
+			bsc.login(aPinCode);
+			try {
+				BaseSigner signer = bsc.getSigner(cert.asX509Certificate(), Algorithms.SIGNATURE_RSA_SHA256);
+				signature.sign(signer);
+			} finally {
+				bsc.logout();
+			}
+			
+			signature.write(outStream);
+		} finally {
+			if (bsc.isSessionActive())
+				bsc.closeSession();
+		}
+	}
 }

@@ -117,34 +117,47 @@ public class App {
 			
 			logger.trace("-------------------PDF Signing Start-------------------");
 			PdfSigner pdfSigner = new PdfSigner();	
-			String tmpUnsignedPdfFile = FilenameUtils.concat(FileUtils.getTempDirectoryPath(), "ESignUnsignedTestPdf.pdf");
-			FileUtils.deleteQuietly(new File(tmpUnsignedPdfFile));
-			String tmpSignedPdfFile = FilenameUtils.concat(FileUtils.getTempDirectoryPath(), "ESignSignedTestPdf.pdf");
-			FileUtils.deleteQuietly(new File(tmpSignedPdfFile));
+			String tmpPdf = FilenameUtils.concat(FileUtils.getTempDirectoryPath(), "ESignTest.pdf");
+			FileUtils.deleteQuietly(new File(tmpPdf));
+			String tmpXAdESSignedPdf = FilenameUtils.concat(FileUtils.getTempDirectoryPath(), "ESignTestXAdES_Signed.pdf");
+			FileUtils.deleteQuietly(new File(tmpXAdESSignedPdf));
+			String tmpPAdESSignedPdf = FilenameUtils.concat(FileUtils.getTempDirectoryPath(), "ESignTestPAdES_Signed.pdf");
+			FileUtils.deleteQuietly(new File(tmpPAdESSignedPdf));
 			
 			byte[] pdfBuffer = IOUtils.resourceToByteArray("/esya/test/ImzasizPdf.pdf");		
-			FileUtils.writeByteArrayToFile(new File(tmpUnsignedPdfFile), pdfBuffer);
+			FileUtils.writeByteArrayToFile(new File(tmpPdf), pdfBuffer);
 			logger.trace("Unsigned PDF");
-			logger.trace(tmpUnsignedPdfFile);
+			logger.trace(tmpPdf);
 
-			FileInputStream unsignedPdf = new FileInputStream(tmpUnsignedPdfFile);
-			FileOutputStream signedPdf = new FileOutputStream(tmpSignedPdfFile);
+			FileInputStream unsignedPdf = new FileInputStream(tmpPdf);
 			
-			logger.trace("Signing PDF");
-			pdfSigner.signPades(unsignedPdf, signedPdf, terminals.get(0), cert.SerialNumber, ESignUtil.TEST_IMZA_PIN);
+			FileOutputStream padesSignedPdf = new FileOutputStream(tmpPAdESSignedPdf);
+			
+			logger.trace("Signing PAdES PDF");
+			pdfSigner.signPAdES(unsignedPdf, padesSignedPdf, terminals.get(0), cert.SerialNumber, ESignUtil.TEST_IMZA_PIN, false, false);
 
-			logger.trace("Signed PDF");
-			logger.trace(tmpSignedPdfFile);
+			logger.trace("Signed PAdES PDF");
+			logger.trace(tmpPAdESSignedPdf);
 
-			FileInputStream validationPdf = new FileInputStream(tmpSignedPdfFile);
-			if (pdfSigner.validateSignedPdf(validationPdf))
+			FileInputStream padesValidationPdf = new FileInputStream(tmpPAdESSignedPdf);
+			if (pdfSigner.validatePAdESSignedPdf(padesValidationPdf))
 			{
-				logger.info("PDF Sign is valid!");
+				logger.info("PDF PAdES Sign is valid!");
 			}
 			else
 			{
-				logger.error("PDF Sign is not valid!");
+				logger.error("PDF PAdES Sign is not valid!");
 			}
+			
+			FileInputStream unsignedXAdESPdf = new FileInputStream(tmpPdf);
+			FileOutputStream xadesSignedPdf = new FileOutputStream(tmpXAdESSignedPdf);
+			
+			logger.trace("Signing XAdES PDF");
+			xmlSigner.signBes(unsignedXAdESPdf, xadesSignedPdf, terminals.get(0), cert.SerialNumber, ESignUtil.TEST_IMZA_PIN, "application/pdf");
+
+			logger.trace("Signed XAdES PDF");
+			logger.trace(tmpXAdESSignedPdf);
+						
 			logger.trace("-------------------PDF Signing End-------------------");			
 			
 		

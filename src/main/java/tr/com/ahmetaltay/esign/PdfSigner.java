@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.Calendar;
 
+import javax.print.attribute.DocAttribute;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,32 +45,38 @@ public class PdfSigner {
 		PAdESContext context = new PAdESContext();
 		Config config = new Config(ESignUtil.ESYA_SIGNATURE_CONFIG_FILE);
 		context.setConfig(config);
-		context.setSignWithTimestamp(true);
 		return context;
 	}
 	
-	public void signPades(InputStream aPdf, OutputStream aSignedPdf, String aTerminalName, BigInteger aCertSerial, String aPinCode)
-			throws PKCS11Exception, IOException, ESYAException, SignatureException {
+	private void sign(InputStream aPdf, OutputStream aSignedPdf, String aTerminalName, BigInteger aCertSerial, String aPinCode, SignatureFormat signatureFormat, boolean useTimestamp, boolean showSignatureOnPdf)
+			throws PKCS11Exception, IOException, ESYAException, SignatureException 
+	{
 		PAdESContext context = createContext();
 
+		if (useTimestamp)
+			context.setSignWithTimestamp(true);
+		
 		SmartCardManager scm = new SmartCardManager();
 		BaseSmartCard bsc = scm.getSmartCard(aTerminalName);
 		try {
 			ECertificate cert = scm.getECertificate(bsc, aCertSerial);
-			SignatureContainer signatureContainer = SignatureFactory.readContainer(SignatureFormat.PAdES, aPdf, context);
+			SignatureContainer signatureContainer = SignatureFactory.readContainer(signatureFormat, aPdf, context);
 			PAdESSignature signature = (PAdESSignature)signatureContainer.createSignature(cert);
 			signature.setSigningTime(Calendar.getInstance());
 			
-			// set visible position
-	        VisibleSignature visibleSignature = new VisibleSignature();
-	        visibleSignature.setPosition(new Position(1, 400 , 150 , 550, 80));
+			if (showSignatureOnPdf)
+			{			
+				// set visible position
+		        VisibleSignature visibleSignature = new VisibleSignature();
+		        visibleSignature.setPosition(new Position(1, 400 , 150 , 550, 80));
+	
+		        // set visible content
+		        String visibleText = "Bu belge "+ cert.getSubject().getCommonNameAttribute() +" tarafından elektronik olarak imzalanmıştır.";
+		        visibleSignature.setText(visibleText);
+	
+		        signature.setVisibleSignature(visibleSignature);
+			}
 
-	        // set visible content
-	        String visibleText = "Bu belge "+ cert.getSubject().getCommonNameAttribute() +" tarafından elektronik olarak imzalanmıştır.";
-	        visibleSignature.setText(visibleText);
-
-	        signature.setVisibleSignature(visibleSignature);
-			
 			bsc.login(aPinCode);
 			try {
 				BaseSigner signer = bsc.getSigner(cert.asX509Certificate(), Algorithms.SIGNATURE_RSA_SHA256);
@@ -83,9 +91,9 @@ public class PdfSigner {
 		}
 	}
 	
-	public boolean validateSignedPdf(InputStream aPdf) throws SignatureException
+	private boolean validateSignedPdf(InputStream aPdf, SignatureFormat signatureFormat) throws SignatureException
 	{
-        SignatureContainer sc = SignatureFactory.readContainer(SignatureFormat.PAdES, aPdf, createContext());
+        SignatureContainer sc = SignatureFactory.readContainer(signatureFormat, aPdf, createContext());
 
         ContainerValidationResult validationResult = sc.verifyAll();
              
@@ -93,5 +101,56 @@ public class PdfSigner {
         logger.trace(validationResult.getResultType().name());
         
         return validationResult.getResultType() == ContainerValidationResultType.ALL_VALID;
+	}
+
+	/**
+	 * @deprecated
+	 * XAdES imzalama certval-policy.xml yükleme işleminde hata veriyor. Esya kaynaklı bir problm olabilir
+	 */
+	@Deprecated()
+	public void signXAdES(InputStream aPdf, OutputStream aSignedPdf, String aTerminalName, BigInteger aCertSerial, String aPinCode, boolean useTimestamp, boolean showSignatureOnPdf)
+			throws PKCS11Exception, IOException, ESYAException, SignatureException 
+	{
+		sign(aPdf, aSignedPdf, aTerminalName, aCertSerial, aPinCode, SignatureFormat.XAdES, useTimestamp, showSignatureOnPdf);
+	}
+
+	/**
+	 * @deprecated
+	 * CAdES imzalama certval-policy.xml yükleme işleminde hata veriyor. Esya kaynaklı bir problm olabilir
+	 */
+	@Deprecated()
+	public void signCAdES(InputStream aPdf, OutputStream aSignedPdf, String aTerminalName, BigInteger aCertSerial, String aPinCode, boolean useTimestamp, boolean showSignatureOnPdf)
+			throws PKCS11Exception, IOException, ESYAException, SignatureException 
+	{
+		sign(aPdf, aSignedPdf, aTerminalName, aCertSerial, aPinCode, SignatureFormat.CAdES, useTimestamp, showSignatureOnPdf);
+	}
+
+	public void signPAdES(InputStream aPdf, OutputStream aSignedPdf, String aTerminalName, BigInteger aCertSerial, String aPinCode, boolean useTimestamp, boolean showSignatureOnPdf)
+			throws PKCS11Exception, IOException, ESYAException, SignatureException 
+	{
+		sign(aPdf, aSignedPdf, aTerminalName, aCertSerial, aPinCode, SignatureFormat.PAdES, useTimestamp, showSignatureOnPdf);
+	}
+	
+	/**
+	 * @deprecated
+	 * XAdES imzalama certval-policy.xml yükleme işleminde hata veriyor. Esya kaynaklı bir problm olabilir
+	 */
+	public boolean validateXAdESSignedPdf(InputStream aPdf) throws SignatureException
+	{
+		return validateSignedPdf(aPdf, SignatureFormat.XAdES);
+	}
+	
+	/**
+	 * @deprecated
+	 * CAdES imzalama certval-policy.xml yükleme işleminde hata veriyor. Esya kaynaklı bir problm olabilir
+	 */
+	public boolean validateCAdESSignedPdf(InputStream aPdf) throws SignatureException
+	{
+		return validateSignedPdf(aPdf, SignatureFormat.CAdES);
+	}
+
+	public boolean validatePAdESSignedPdf(InputStream aPdf) throws SignatureException
+	{
+		return validateSignedPdf(aPdf, SignatureFormat.PAdES);
 	}
 }
