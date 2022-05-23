@@ -1,0 +1,49 @@
+﻿MA3 API – KULLANICI LİSANS SÖZLEŞMESİ 
+
+İşbu Kullanıcı Lisans Sözleşmesi (bundan böyle “Sözleşme” olarak anılacaktır) TÜBİTAK BİLGEM ile KULLANICI arasındaki yasal anlaşmadır.
+
+Sözleşme’de kullanılan kısaltmalar aşağıda tanımlanmıştır: 
+
+“TÜBİTAK BİLGEM”, TÜBİTAK Bilişim ve Bilgi Güvenliği İleri Teknolojiler Araştırma Merkezi kamu tüzel kişiliğidir.
+
+“MA3 API”, TÜBİTAK BİLGEM tarafından geliştirilen elektronik imza yazılım kütüphanesi ve tüm bileşenleridir.
+
+“KULLANICI”, MA3 API’yi kullanarak yazılım geliştiren gerçek veya tüzel kişilerdir.
+
+“SON KULLANICI”, MA3 API'nin kullanıldığı yazılımı kullanan gerçek veya tüzel kişilerdir.
+
+“UYUM DEĞERLENDİRME”, elektronik imza atan ve/veya doğrulayan uygulamaların elektronik imza mevzuatında geçen uluslararası teknik standartlara uygunluğunun değerlendirildiği ve denetiminin yapıldığı yetkili mercilerdir.
+
+KULLANICI, MA3 API’yi indirerek, kopyalayarak, bulundurarak veya kullanarak burada belirtilen tüm şart ve hükümlerin tamamına uymayı taahhüt ettiğini ve bu şart ve hükümler ile yasal olarak bağlı olduğunu kabul etmiş olur: 
+
+1)	İşbu Sözleşme hükümleri, MA3 API’nin TÜBİTAK BİLGEM tarafından değiştirilmediği, yenilenmediği veya yeni sözleşme ile ortadan kaldırılmadığı sürece geçerlidir.
+
+2)	TÜBİTAK BİLGEM ve KULLANICI arasında farklı bir sözleşme olmadığı sürece işbu Sözleşme, MA3 API’ye ilişkin daha önceki tüm beyanları, görüşmeleri, yükümlülükleri, haberleşmeleri veya tanıtımları geçersiz kılar ve bunların yerine geçer.
+
+3)	TÜBİTAK BİLGEM, işbu Sözleşme’de değişiklik yapma hakkını saklı tutar.
+
+4)	TÜBİTAK BİLGEM, MA3 API’nin ücret, kullanım ve dağıtım politikalarında değişiklik yapma hakkını saklı tutar.
+
+5)	MA3 API veya MA3 API’den türetilmiş imzalama kütüphaneleri, TÜBİTAK BİLGEM’in yazılı onayı olmadan satılamaz, alt lisansı verilemez, kiralanamaz, ödünç verilemez veya ödünç alınamaz.
+
+6)	MA3 API’nin kullanıldığı uygulama veya yazılım bileşenleri için UYUM DEĞERLENDİRME onayı alınması KULLANICI’nın sorumluluğundadır.
+
+7)	MA3 API’nin kullanıldığı ürünlerdeki süreç, konfigürasyon, politika yönetimi ve kullanım ile ilgili tüm sorumluluk ve risk KULLANICI’ya aittir. 
+
+8)	TÜBİTAK BİLGEM, KULLANICI ve/veya SON KULLANICI tarafından MA3 API kullanılarak icra edilecek görevlere/yürütülecek işlere yönelik olarak herhangi bir sorumluluk almamakta ve KULLANICI, SON KULLANICI ve/veya üçüncü taraflar nezdinde herhangi bir taahhüt altına girmemektedir. KULLANICI ve/veya SON KULLANICI MA3 API’nin kullanılması sonucu uğrayabileceği doğrudan veya dolaylı herhangi bir kayıp ve zarardan dolayı, TÜBİTAK ve TÜBİTAK BİLGEM’in sorumlu olmadığını, kabul ve taahhüt eder.
+
+9)	KULLANICI, işbu Sözleşme’nin hükümlerini ihlali sebebi ile, TÜBİTAK’ın ve TÜBİTAK BİLGEM’in doğabilecek tüm zararlarının tazmininden doğrudan sorumludur. KULLANICI’nın işbu Sözleşme hükümlerinden herhangi birini ihlali durumunda, TÜBİTAK’ın ve TÜBİTAK BİLGEM’in ihtiyati tedbir kararı aldırmak da dahil olmak üzere tüm yasal hakları saklıdır.
+
+10)	MA3 API için bir teknik destek taahhüdü bulunmamaktadır. Destek talepleri münferiden değerlendirilip, uygun görüldüğü takdirde belirli bir ücret karşılığında destek verilebilecektir. TÜBİTAK BİLGEM kendi takdirine bağlı olarak, sorunun çözülmesinin teknik desteğin kapsamının dışında olduğuna hükmetme, teknik destek sağlamayı reddetme, askıya alma veya sonlandırma hakkını saklı tutar.
+
+11)	İşbu Sözleşme’nin bir kopyası, MA3 API kullanılarak geliştirilen ürünlerle birlikte SON KULLANICI’lara dağıtılmalıdır. KULLANICI, SON KULLANICI’ların da işbu metinde yazılanlara uymayı taahhüt ettiğini sağlamalıdır. 
+
+12)	KULLANICI, MA3 API kullanarak geliştirdiği ürüne, SON KULLANICI tarafından fark edilebilecek şekilde, TÜBİTAK BİLGEM - MA3 API Elektronik İmza Kütüphanesi’nin kullandığını gösterir bir ibare koymak zorundadır.
+
+13)	KULLANICI, işbu Sözleşme ile birlikte MA3 API içeriğinde bulunan, TÜBİTAK BİLGEM’e ait olmayan her türlü yazılım ve kütüphanelerin lisans sözleşmelerini/taahhütnamelerini/kullanım şartlarını vb. de kabul etmiş sayılır. Bu kütüphanelerin kullanımı ile ilgili tüm sorumluluk ve risk KULLANICI’ya aittir.
+
+14)	MA3 API üzerinde herhangi bir geri derleme, tersine mühendislik işlemi veya başka bir şekilde yazılımın kaynak kodunu bulmaya yönelik çalışmalar yapılamaz.
+
+15)	TÜBİTAK BİLGEM, MA3 API’de ve ilgili dokümanlarda değişiklik yapma hakkını saklı tutar. KULLANICI yeni sürümdeki lisans sözleşmesinde yer alan maddeler çerçevesinde yayınlanan yeni sürümü kullanabilir. TÜBİTAK BİLGEM, MA3 API’nin sürümleri arasında herhangi bir uyumluluk taahhüdünde bulunmaz.
+
+16)	MA3 API’nin sağlayıcısı ve sahibi TÜBİTAK BİLGEM olup, MA3 API ve MA3 API’nin ilgili tüm bileşenlerinin üzerindeki Fikir ve Sanat Eserleri Kanunu ve ilgili kanun ve kanun hükmünde kararnamelerden doğan tüm fikri ve sınai mülkiyet hakları (telif, know-how, patent, faydalı model, satış, lisans, değişiklik, üretim vs.) tescil edilmesi koşuluna bağlı olmaksızın TÜBİTAK BİLGEM’e aittir.
