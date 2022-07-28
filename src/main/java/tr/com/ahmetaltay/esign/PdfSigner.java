@@ -1,13 +1,20 @@
 package tr.com.ahmetaltay.esign;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.Calendar;
 
-import javax.print.attribute.DocAttribute;
-
+import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,13 +24,12 @@ import tr.gov.tubitak.uekae.esya.api.asn.x509.ECertificate;
 import tr.gov.tubitak.uekae.esya.api.common.ESYAException;
 import tr.gov.tubitak.uekae.esya.api.common.crypto.Algorithms;
 import tr.gov.tubitak.uekae.esya.api.common.crypto.BaseSigner;
-import tr.gov.tubitak.uekae.esya.api.pades.PAdESContext;
-import tr.gov.tubitak.uekae.esya.api.pades.PAdESSignature;
-import tr.gov.tubitak.uekae.esya.api.pades.Position;
-import tr.gov.tubitak.uekae.esya.api.pades.VisibleSignature;
+import tr.gov.tubitak.uekae.esya.api.pades.pdfbox.PAdESContext;
+import tr.gov.tubitak.uekae.esya.api.pades.pdfbox.PAdESSignature;
+import tr.gov.tubitak.uekae.esya.api.pades.pdfbox.SignaturePanel;
+import tr.gov.tubitak.uekae.esya.api.pades.pdfbox.VisibleSignature;
 import tr.gov.tubitak.uekae.esya.api.signature.ContainerValidationResult;
 import tr.gov.tubitak.uekae.esya.api.signature.ContainerValidationResultType;
-import tr.gov.tubitak.uekae.esya.api.signature.Signature;
 import tr.gov.tubitak.uekae.esya.api.signature.SignatureContainer;
 import tr.gov.tubitak.uekae.esya.api.signature.SignatureException;
 import tr.gov.tubitak.uekae.esya.api.signature.SignatureFactory;
@@ -48,6 +54,30 @@ public class PdfSigner {
 		return context;
 	}
 	
+	private static byte [] createSignatureImage(String image, String text, SignaturePanel imagePanel, Dimension imageSize) throws IOException
+    {
+
+        BufferedImage bufferedImage = new BufferedImage(imagePanel.getWidth(), imagePanel.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = bufferedImage.createGraphics();
+
+        g2d.setColor(Color.white);
+        g2d.fillRect(0, 0, imagePanel.getWidth(), imagePanel.getHeight());
+
+        File imageFile = new File(image);
+        BufferedImage logo = ImageIO.read(imageFile);
+        g2d.drawImage(logo, 0, 0, imageSize.width, imageSize.height, null);
+
+        g2d.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+        g2d.setColor(Color.black);
+        g2d.drawString(text, imageSize.width, imageSize.height/2);
+        g2d.dispose();
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, imageFile.getName().split("\\.")[1] , os);
+
+        return os.toByteArray();
+    }
+	
 	private void sign(InputStream aPdf, OutputStream aSignedPdf, String aTerminalName, BigInteger aCertSerial, String aPinCode, SignatureFormat signatureFormat, boolean useTimestamp, boolean showSignatureOnPdf)
 			throws PKCS11Exception, IOException, ESYAException, SignatureException 
 	{
@@ -66,13 +96,15 @@ public class PdfSigner {
 			
 			if (showSignatureOnPdf)
 			{			
-				// set visible position
+		        SignaturePanel signaturePanel = new SignaturePanel(50, 500, 450, 50);
+		        Dimension imageSize = new Dimension(50, 50);
+		        String visibleText = "Bu belge "+ cert.getSubject().getCommonNameAttribute() + " tarafýndan elektronik olarak imzalanmýþtýr.";
+		        byte[] imageBytes = createSignatureImage(ESignUtil.ESYA_PDF_SIGNATURE_LOGO, visibleText, signaturePanel, imageSize);
+
 		        VisibleSignature visibleSignature = new VisibleSignature();
-		        visibleSignature.setPosition(new Position(1, 400 , 150 , 550, 80));
-	
-		        // set visible content
-		        String visibleText = "Bu belge "+ cert.getSubject().getCommonNameAttribute() +" tarafÄ±ndan elektronik olarak imzalanmÄ±ÅŸtÄ±r.";
-		        visibleSignature.setText(visibleText);
+		        visibleSignature.setPosition(1, signaturePanel);
+		        visibleSignature.setImage(new ByteArrayInputStream(imageBytes));
+		        visibleSignature.setLocation("Mersin");
 	
 		        signature.setVisibleSignature(visibleSignature);
 			}

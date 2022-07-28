@@ -30,7 +30,7 @@
         <digest-alg>SHA-256</digest-alg>
         <!-- leave below settings blank, if not ESYA Timestamp Server! -->
 		<!-- for test timestamp account mail to bilgi@kamusm.gov.tr  -->
-        <userid>user_id</userid>
+        <userid>0</userid>
         <password>password</password>
     </timestamp-server>
 
@@ -61,7 +61,9 @@
         <use-validation-data-published-after-creation>false</use-validation-data-published-after-creation>
 
         <validate-certificate-before-signing>true</validate-certificate-before-signing>
-
+		
+		<!-- default value: 300 seconds -->
+		<tolerate-signing-time-in-seconds>300</tolerate-signing-time-in-seconds>
     </certificate-validation>
 
     <params>

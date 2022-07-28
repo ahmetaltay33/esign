@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <policy>
     <find>
-      <trustedcertificate>
+        <trustedcertificate>
         <class name="tr.gov.tubitak.uekae.esya.api.certificate.validation.find.certificate.trusted.TrustedCertificateFinderFromECertStore">
           <param name="storepath" value="@certStoreFile"/>
           <param name="securitylevel" value="legal" />
@@ -9,7 +9,7 @@
         <class name="tr.gov.tubitak.uekae.esya.api.certificate.validation.find.certificate.trusted.TrustedCertificateFinderFromFileSystem">
           <param name="dizin" value="@trustedfolder" />
         </class>
-    </trustedcertificate>
+        </trustedcertificate>
         <certificate>
             <class name="tr.gov.tubitak.uekae.esya.api.certificate.validation.find.certificate.CertificateFinderFromECertStore"/>
 			<class name="tr.gov.tubitak.uekae.esya.api.certificate.validation.find.certificate.CertificateFinderFromHTTP"/>

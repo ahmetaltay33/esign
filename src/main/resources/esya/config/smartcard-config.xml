@@ -32,6 +32,7 @@
         <lib name="eTPKCS11"/>
         <atr value="3BD5180081313A7D8073C8211030"/>
         <atr value="3BD518008131FE7D8073C82110F4"/>
+		<atr value="3B7F96000080318065B0846160FB120FFD829000"/>
     </card-type>
 
     <card-type name="ATIKKG">

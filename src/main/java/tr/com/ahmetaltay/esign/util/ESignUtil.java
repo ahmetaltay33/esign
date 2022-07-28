@@ -29,6 +29,7 @@ public class ESignUtil {
 	public static final String ESYA_SMARTCARD_CONFIG_FILE = FilenameUtils.concat(ESYA_CONFIG_FOLDER, "smartcard-config.xml");
 	public static final String ESYA_CERTSTORE_FILE = FilenameUtils.concat(ESYA_CERTSTORE_FOLDER, "SertifikaDeposu.svt");	
 	public static final String ESYA_LISANS_FILE = FilenameUtils.concat(ESYA_FOLDER, "lisans.xml");	
+	public static final String ESYA_PDF_SIGNATURE_LOGO = FilenameUtils.concat(ESYA_FOLDER, "PdfSignatureLogo.png");	
 
 	private static URL getResourceURL(String aResourceName) throws IOException {
 		return IOUtils.resourceToURL(aResourceName);
@@ -38,6 +39,10 @@ public class ESignUtil {
 		return IOUtils.resourceToString(aResourceName, StandardCharsets.UTF_8);
 	}
 
+	private void createPdfSignatureLogo() throws IOException {
+		FileUtils.copyURLToFile(getResourceURL("/esya/PdfSignatureLogo.png"), new File(ESYA_PDF_SIGNATURE_LOGO));
+	}
+	
 	private void createLisansXml() throws IOException {
 		FileUtils.copyURLToFile(getResourceURL("/esya/lisans.xml"), new File(ESYA_LISANS_FILE));
 	}
@@ -89,6 +94,7 @@ public class ESignUtil {
 		FileUtils.forceMkdir(new File(ESYA_CONFIG_FOLDER));
 		FileUtils.forceMkdir(new File(ESYA_CERTSTORE_FOLDER));
 		FileUtils.forceMkdir(new File(ESYA_TRUSTED_FOLDER));
+		createPdfSignatureLogo();
 		createLisansXml();
 		createCertStore();
 		createTrustedCerts();

@@ -134,7 +134,7 @@ public class App {
 			FileOutputStream padesSignedPdf = new FileOutputStream(tmpPAdESSignedPdf);
 			
 			logger.trace("Signing PAdES PDF");
-			pdfSigner.signPAdES(unsignedPdf, padesSignedPdf, terminals.get(0), cert.SerialNumber, ESignUtil.TEST_IMZA_PIN, false, false);
+			pdfSigner.signPAdES(unsignedPdf, padesSignedPdf, terminals.get(0), cert.SerialNumber, ESignUtil.TEST_IMZA_PIN, false, true);
 
 			logger.trace("Signed PAdES PDF");
 			logger.trace(tmpPAdESSignedPdf);

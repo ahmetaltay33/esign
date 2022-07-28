@@ -34,7 +34,8 @@
     </timestamp-server>
 
     <algorithms>
-        <digest-method>http://www.w3.org/2001/04/xmlenc#sha256</digest-method>
+        <digest-alg>SHA-256</digest-alg>
+		<ocsp-digest-algorithm>SHA-256</ocsp-digest-algorithm>
     </algorithms>
 
     <validation>
@@ -60,6 +61,12 @@
 
         <!-- if there is a signing time in the signature, decide if you want to trust -->
         <trust-signing-time>false</trust-signing-time>
+	
+	    <!--used to provide validation profile information, P1 refers to turkish profile#1 and so on-->
+        <!--validation-profile>P1_1</validation-profile-->
+		
+		<!-- default value: 300 seconds -->
+		<tolerate-signing-time-in-seconds>300</tolerate-signing-time-in-seconds>
 
         <validators>
             <!--
